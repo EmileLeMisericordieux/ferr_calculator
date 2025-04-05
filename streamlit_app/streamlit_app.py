@@ -1,25 +1,45 @@
+from helper_functions import *
 import plotly.express as px
 import streamlit as st
 import pandas as pd
 
 
-df = pd.DataFrame({
-    'age': [
-        65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
-        76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86,
-        87, 88, 89, 90, 91, 92, 93, 94, 95
-    ],
-    'min_withdraw': [
-        4.00, 4.17, 4.35, 4.55, 4.76, 5.00, 5.28,
-        5.40, 5.53, 5.67, 5.82, 5.98, 6.17, 6.36,
-        6.58, 6.82, 7.08, 7.38, 7.71, 8.08, 8.51,
-        8.99, 9.55, 10.21, 10.99, 11.92, 13.06,
-        14.49, 16.34, 18.79, 20.00
-    ]
-})
+st.set_page_config(layout="wide")
 
-st.write("Streamlit testing")
+with st.sidebar:
+    st.image(r"streamlit_app\static\1743878344560-26372b5e-087c-4937-b368-72e4aa19caae_1.jpg", width=500)
+    st.title("Versement de FERR")
+
+    start_value = st.number_input("Valeur du FERR", value=200_000)
+    start_age = st.number_input("Début du FERR à l'âge de", value=71)
+    end_age = st.number_input("Fin du FERR à l'âge de", value=90)
+    interest_rate = st.number_input("Taux de rendement", value=6.00, min_value=0.0, max_value=100.0)
+    start_paying_on_year = st.number_input("Commencer les versements durant l'année", value=1, min_value=1, max_value=10)
+
+    paying_type = st.selectbox("Type de versement", ("Minimum", "Fixe"))
+
+    if paying_type == "Fixe":
+        fix_value = st.number_input("Versement fixe", value=15_000)
+        inflation_rate = st.number_input("Taux d'inflation", value=1.5)
+    else:
+        fix_value=0
+        inflation_rate=1.5
+
+calc = FerrCalculator(
+    start_value=start_value,
+    start_age=start_age,
+    end_age=end_age,
+    interest_rate=interest_rate,
+    start_paying_on_year=start_paying_on_year,
+    paying_type=paying_type,
+    fix_value=fix_value,
+    inflation_rate=inflation_rate
+)
+
+df = calc.calculate()
+
+st.write("Résultats du FERR")
 st.write(df)
 
-fig = px.line(df, x="age", y="min_withdraw", title='Withdrawals')
+fig = px.line(df, x="Age", y="Valeur à la fin de l'année", title="Valeur du FERR à la fin de l'année")
 st.plotly_chart(fig)
