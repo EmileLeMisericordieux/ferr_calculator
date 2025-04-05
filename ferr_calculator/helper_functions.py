@@ -108,7 +108,45 @@ class FerrCalculator():
         df = df[df['start_year_value'] != 0]
 
         if self.paying_type != "Minimum":
-            df['min_withdraw'] =  (df["year_payment"] / df['start_year_value']) * 100
+            df['min_withdraw'] =  (df["year_payment"] / df['start_year_value'])
 
+        else:
+            df['min_withdraw'] = df['min_withdraw'] / 100
         df = self.reformat_df(df)
         return df
+
+def add_thousand_separator_with_dollar(df, column):
+    """
+    Format a numeric column with a space as thousands separator and a $ sign at the end.
+
+    Args:
+        df (pd.DataFrame): The DataFrame.
+        column (str): The name of the column to format.
+
+    Returns:
+        pd.DataFrame: DataFrame with the formatted column (as strings).
+    """
+    df = df.copy()
+    df[column] = df[column].apply(
+        lambda x: f"{x:,.0f}".replace(",", " ") + "$" if pd.notnull(x) else ""
+    )
+    return df
+
+def format_percent_column(df, column, decimals=0):
+    """
+    Format a numeric column as a percentage with space as thousands separator and % at the end.
+
+    Args:
+        df (pd.DataFrame): The DataFrame.
+        column (str): The name of the column to format.
+        decimals (int): Number of decimal places to keep (default is 0).
+
+    Returns:
+        pd.DataFrame: DataFrame with the formatted column (as strings).
+    """
+    df = df.copy()
+    format_str = f"{{:,.{decimals}f}}"
+    df[column] = df[column].apply(
+        lambda x: format_str.format(x * 100).replace(",", " ") + "%" if pd.notnull(x) else ""
+    )
+    return df
