@@ -2,5 +2,5 @@ markdown2==2.5.3
 pandas==1.5.3
 pandas==2.0.3
 plotly==5.9.0
-pretty_html_table==0.9.16
+pretty-html-table==0.9.16
 streamlit==1.44.1
