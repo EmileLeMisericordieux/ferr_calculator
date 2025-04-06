@@ -16,7 +16,7 @@ def report_template(
         fig
     ):
 
-    image_html = get_base64_image(r"ferr_calculator\static\1743878344560-26372b5e-087c-4937-b368-72e4aa19caae_1.jpg")
+    image_html = get_base64_image("ferr_calculator/static/1743878344560-26372b5e-087c-4937-b368-72e4aa19caae_1.jpg")
 
     fig.update_layout(
         width=1000,   # width in pixels
