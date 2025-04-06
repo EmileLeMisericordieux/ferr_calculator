@@ -97,7 +97,7 @@ report = markdown2.markdown(
 )
 
 st.download_button(
-    label="Download report",
+    label="Télécharger le rapport à imprimer",
     data=report,
     file_name="report.html",
     mime="text/html",
