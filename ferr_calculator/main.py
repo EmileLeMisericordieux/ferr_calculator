@@ -9,7 +9,7 @@ import markdown2
 st.set_page_config(layout="wide")
 
 with st.sidebar:
-    st.image(r"ferr_calculator\static\1743878344560-26372b5e-087c-4937-b368-72e4aa19caae_1.jpg", width=500)
+    st.image("ferr_calculator/static/1743878344560-26372b5e-087c-4937-b368-72e4aa19caae_1.jpg", width=500)
     st.title("Versement de FERR")
 
     start_value = st.number_input("Valeur du FERR", value=200_000)
