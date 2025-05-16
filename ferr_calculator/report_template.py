@@ -13,7 +13,8 @@ def report_template(
         fix_value,
         inflation_rate,
         df,
-        fig
+        fig,
+        selection
     ):
 
     image_html = get_base64_image("ferr_calculator/static/1743878344560-26372b5e-087c-4937-b368-72e4aa19caae_1.jpg")
@@ -67,13 +68,13 @@ def report_template(
 </head>
 <body>
 
-# Versement de FERR
+# Versement de {selection}
 
 <img src={image_html} alt="logo" width="200"/>
 
-Valeur du FERR: **{format_money(start_value)}** <br>
-Début du FERR à l'âge de: **{start_age}** <br>
-Fin du FERR à l'âge de: **{end_age}** <br>
+Valeur du {selection}: **{format_money(start_value)}** <br>
+Début du {selection} à l'âge de: **{start_age}** <br>
+Fin du {selection} à l'âge de: **{end_age}** <br>
 Taux de rendement: **{format_percent(interest_rate)}** <br>
 Commencer les versements durant l'année: **{start_paying_on_year}** <br>
 Type de versement: **{paying_type}** <br>
@@ -82,7 +83,7 @@ Type de versement: **{paying_type}** <br>
 {build_table(df, 'blue_dark')}
 
 <div class="graph-container">
-    <h2>Graphique de la valeur du FERR</h2>
+    <h2>Graphique de la valeur du {selection}</h2>
     {pio.to_html(fig, full_html=False, include_plotlyjs='cdn')}
 </div>
 

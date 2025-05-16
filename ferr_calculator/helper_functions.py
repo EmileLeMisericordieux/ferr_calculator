@@ -115,6 +115,35 @@ class FerrCalculator():
         df = self.reformat_df(df)
         return df
 
+class NoMinimumCalculator(FerrCalculator):
+    def __init__(
+        self,
+        start_value = 200000,
+        start_age = 71,
+        end_age = 90,
+        interest_rate = 6,
+        start_paying_on_year = 2,
+        paying_type = "Fixe",
+        fix_value = 0,
+        inflation_rate = 1.5
+    ):
+        super().__init__(
+            start_value,
+            start_age,
+            end_age,
+            interest_rate,
+            start_paying_on_year,
+            paying_type,
+            fix_value,
+            inflation_rate
+        )
+
+        self.min_withdrawal = pd.DataFrame({
+            'age': [i for i in range(0, 101)],
+            'min_withdraw': [0 for i in range(0, 101)]
+        })
+
+
 def add_thousand_separator_with_dollar(df, column):
     """
     Format a numeric column with a space as thousands separator and a $ sign at the end.
